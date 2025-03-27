@@ -1,0 +1,60 @@
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+export default function ForkMyFeels() {
+  const [mood, setMood] = useState("");
+  const [recipe, setRecipe] = useState(null);
+
+  const handleSubmit = () => {
+    // Temporary logic: This should call your AI or recipe-matching backend
+    const fakeRecipes = {
+      anxious: {
+        name: "Golden Turmeric Latte",
+        description: "Warm, calming, anti-inflammatory, caffeine-free"
+      },
+      tired: {
+        name: "Green Smoothie with Spinach and Pineapple",
+        description: "Refreshing, iron-rich energy boost"
+      },
+      heartbroken: {
+        name: "Chocolate Lava Cake",
+        description: "Soothing and indulgent, just like your favorite breakup playlist"
+      },
+      default: {
+        name: "Mystery Snack Platter",
+        description: "Because life’s weird and so is this plate."
+      }
+    };
+
+    const key = mood.toLowerCase().trim();
+    setRecipe(fakeRecipes[key] || fakeRecipes["default"]);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-orange-100 flex flex-col items-center justify-center p-4">
+      <h1 className="text-4xl font-bold text-center mb-4">🍴 Fork My Feels</h1>
+      <p className="text-center text-lg mb-6">Tell us how you feel. We'll feed your vibe.</p>
+
+      <div className="w-full max-w-md space-y-4">
+        <Input
+          placeholder="I'm feeling... (e.g., anxious, tired, heartbroken)"
+          value={mood}
+          onChange={(e) => setMood(e.target.value)}
+          className="text-lg"
+        />
+        <Button onClick={handleSubmit} className="w-full">Feed Me</Button>
+      </div>
+
+      {recipe && (
+        <Card className="mt-8 w-full max-w-md shadow-xl bg-white">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-semibold mb-2">{recipe.name}</h2>
+            <p className="text-gray-700">{recipe.description}</p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
